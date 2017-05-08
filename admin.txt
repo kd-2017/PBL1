@@ -1,0 +1,134 @@
+-- MySQL dump 10.16  Distrib 10.1.21-MariaDB, for Win32 (AMD64)
+--
+-- Host: localhost    Database: localhost
+-- ------------------------------------------------------
+-- Server version	10.1.21-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+drop database if exists admin;
+create database admin;
+grant all privileges on admin.* to admin@localhost identified by 'admin';
+use admin;
+--
+-- Table structure for table `attendance`
+--
+
+DROP TABLE IF EXISTS `attendance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attendance` (
+  `userid` varchar(10) DEFAULT NULL,
+  `day` varchar(10) DEFAULT NULL,
+  `attendance` varchar(10) DEFAULT NULL,
+  `ontime` varchar(10) DEFAULT NULL,
+  `offtime` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attendance`
+--
+
+LOCK TABLES `attendance` WRITE;
+/*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `holiday`
+--
+
+DROP TABLE IF EXISTS `holiday`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `holiday` (
+  `Date` varchar(10) DEFAULT NULL,
+  `Name` varchar(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `holiday`
+--
+
+LOCK TABLES `holiday` WRITE;
+/*!40000 ALTER TABLE `holiday` DISABLE KEYS */;
+INSERT INTO `holiday` VALUES ('2016/01/01','元日'),('2016/01/11','成人の日'),('2016/02/11','建国記念の日'),('2016/03/20','春分の日'),('2016/04/29','昭和の日'),('2016/05/03','憲法記念日'),('2016/05/04','みどりの日'),('2016/05/05','こどもの日'),('2016/07/18','海の日'),('2016/08/11','山の日'),('2016/09/19','敬老の日'),('2016/09/22','秋分の日'),('2016/10/10','体育の日'),('2016/11/03','文化の日'),('2016/11/23','勤労感謝の日'),('2016/12/23','天皇誕生日'),('2017/01/01','元日'),('2017/01/09','成人の日'),('2017/02/11','建国記念の日'),('2017/03/20','春分の日'),('2017/04/29','昭和の日'),('2017/05/03','憲法記念日'),('2017/05/04','みどりの日'),('2017/05/05','こどもの日'),('2017/07/17','海の日'),('2017/08/11','山の日'),('2017/09/18','敬老の日'),('2017/09/23','秋分の日'),('2017/10/09','体育の日'),('2017/11/03','文化の日'),('2017/11/23','勤労感謝の日'),('2017/12/23','天皇誕生日'),('2018/01/01','元日'),('2018/01/08','成人の日'),('2018/02/11','建国記念の日'),('2018/03/21','春分の日'),('2018/04/29','昭和の日'),('2018/05/03','憲法記念日'),('2018/05/04','みどりの日'),('2018/05/05','こどもの日'),('2018/07/16','海の日'),('2018/08/11','山の日'),('2018/09/17','敬老の日'),('2018/09/23','秋分の日'),('2018/10/08','体育の日'),('2018/11/03','文化の日'),('2018/11/23','勤労感謝の日'),('2018/12/23','天皇誕生日');
+/*!40000 ALTER TABLE `holiday` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `time`
+--
+
+DROP TABLE IF EXISTS `time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `time` (
+  `timetable1` varchar(7) DEFAULT NULL,
+  `timetable2` varchar(8) DEFAULT NULL,
+  `timetable3` varchar(8) DEFAULT NULL,
+  `timetable4` varchar(8) DEFAULT NULL,
+  `timetable5` varchar(8) DEFAULT NULL,
+  `timetable6` varchar(8) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `time`
+--
+
+LOCK TABLES `time` WRITE;
+/*!40000 ALTER TABLE `time` DISABLE KEYS */;
+INSERT INTO `time` VALUES ('9:20:00','10:20:00','11:20:00','13:00:00','14:00:00','15:00:00');
+/*!40000 ALTER TABLE `time` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `userid` varchar(7) DEFAULT NULL,
+  `name` varchar(7) DEFAULT NULL,
+  `password` varchar(7) DEFAULT NULL,
+  `rank` int(1) DEFAULT NULL,
+  `class` int(1) DEFAULT NULL,
+  `address` varchar(7) DEFAULT NULL,
+  `admin` int(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES ('teacher','teacher','teacher',0,0,'address',1),('0K01005','荻野　元気','0K01005',4,1,'address',0),('0K01006','小谷　貴之','0K01006',4,1,'address',0),('0K01010','田淵　翔','0K01010',4,1,'address',0),('0K01011','藤　礼羽','0K01011',4,1,'address',0),('0K01013','西浦　正騎','0K01013',4,1,'address',0),('0K01022','山崎　敬太','0K01022',4,1,'address',0);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-05-08 14:04:10
