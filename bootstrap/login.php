@@ -25,6 +25,11 @@ try{
     }else{
       $userdata = ['userid'=>$result['userid'], 'name'=>$result['name'], 'admin'=>$result['admin']];
       $_SESSION['userid'] = $userdata;
+    //  $_SESSSION['id'] = $result['userid'];
+          if(strstr($_REQUEST['loginId'], $_REQUEST['Password'])){
+          header('location:ChangePassForm.php');
+          exit;
+        }else{
       if($result['admin'] == 0){
         header('location: student.php');
         exit;
@@ -32,6 +37,7 @@ try{
         header('location:teacher.php');
       }exit;
     }
+  }
 }catch(Exception $e){
     echo 'Error:' . $e->getMessage();
 }
