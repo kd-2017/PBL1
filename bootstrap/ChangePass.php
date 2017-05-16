@@ -26,17 +26,15 @@
             # データベース接続
             $pdo = new PDO($dsn, $user, $password);
 
-            # そのユーザーのID取得
-            # ユーザーID取得
-            #$userid = $_POST['id'];
-#Test用
-$userid = '0K01011';
-            # そのユーザーのパスワードを取得 
-            $stmt = $pdo -> prepare("SELECT password FROM User WHERE userid = ?");
+            #ユーザーID取得
+            $userid = $_SESSION['uid'];      
+            # そのユーザーのパスワードと「教員、生徒判定フラグ」を取得 
+            $stmt = $pdo -> prepare("SELECT password, admin FROM User WHERE userid = ?");
             $stmt -> bindValue(1, $userid);
             $stmt -> execute();
             if ($rows = $stmt -> fetch()) {
               $pass = $rows["password"];
+              $admin = $rows["admin"];
             }
 
             # パスワードが一致したなら
@@ -48,8 +46,14 @@ $userid = '0K01011';
               $stmt-> bindValue(2, $userid);
               $stmt-> execute();
               $_SESSION['error'] = 'パスワードを変更しました';
-              # 入力フォームに戻る
-              header('location: ChangePassForm.php');
+              # 教員なら
+              if ($admin == 1) {
+                # 教員ホーム画面に戻る
+                header('location: teacher.php');
+              } else {
+                # 生徒ホーム画面に戻る
+                header('location: student.php');
+              }
               exit;
             #パスワードが違うとき
             } else {
@@ -69,7 +73,7 @@ $userid = '0K01011';
             header('location: ChangePassForm.php');
             exit;
           }
-        # 新しいパスワードと新しいパスワード（確認）が一致しなかったとき        
+        # 新しいパスワードと新しいパスワード（確認）が一致しなかったとき
         } else {
           $error = "新しいパスワードと新しいパスワード（確認）が一致しません";
           # セッションにエラー文格納
