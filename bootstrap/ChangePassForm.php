@@ -27,7 +27,6 @@
       echo $_SESSION['error'];
       # セッション削除
       unset($_SESSION['error']);
-
     }
 ?>
           </h3>
@@ -40,18 +39,15 @@
           <!-- 新しいパスワード入力（確認） -->
           <input type="password" class="form-control" name="ReNewPassword" placeholder="確認のため再度パスワードを入力" required="" style="width: 100%"/> 
           <center>
-            <div class="btn-toolbar">
-              <div class="btn-group" style="width: 49%">
-                <!-- 戻る -->
-                <button class="btn btn-lg btn-primary btn-block" value="Back"　type="button">戻る</button>
-              </div>        
-              <div class="btn-group" style="width: 49%">
                 <!-- 変更ボタン -->
                 <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Change" type="Submit">変更</button>
-              </div>
-            </div>
           </center>
-        </form>     
+        </form>
+        <?php
+        //一つ前のページに戻る
+        $uri = $_SERVER['HTTP_REFERER']; 
+        echo '<br><br><a href='.$uri.'><center><button class="btn btn-lg btn-primary btn-block" value="Back"　type="button" style="width:40%">戻る</button></center></a>';
+         ?>   
       </div>
     </div>
   </body>
