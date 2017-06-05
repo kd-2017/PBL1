@@ -38,10 +38,10 @@
             }
 
             # パスワードが一致したなら
-            if (strstr($_POST['Password'], $pass)) {
+            if (strcmp($_POST['Password'], $pass) == 0 ) {
 
               # パスワード変更
-              $stmt = $pdo -> prepare("UPDATE User SET password = ? WHERE userid = ?");
+              $stmt = $pdo -> prepare("UPDATE user SET password = ? WHERE userid = ?");
               $stmt-> bindValue(1, $NewPass);
               $stmt-> bindValue(2, $userid);
               $stmt-> execute();
