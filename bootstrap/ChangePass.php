@@ -25,7 +25,6 @@
             $password = 'admin';
             # データベース接続
             $pdo = new PDO($dsn, $user, $password);
-
             #ユーザーID取得
             $userid = $_SESSION['uid'];      
             # そのユーザーのパスワードと「教員、生徒判定フラグ」を取得 
@@ -36,10 +35,8 @@
               $pass = $rows["password"];
               $admin = $rows["admin"];
             }
-
             # パスワードが一致したなら
             if (strcmp($_POST['Password'], $pass) == 0 ) {
-
               # パスワード変更
               $stmt = $pdo -> prepare("UPDATE user SET password = ? WHERE userid = ?");
               $stmt-> bindValue(1, $NewPass);
