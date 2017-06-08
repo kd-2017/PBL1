@@ -163,9 +163,9 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `userid` varchar(7) DEFAULT NULL,
+  `userid` varchar(7) BINARY DEFAULT NULL,
   `name` varchar(7) DEFAULT NULL,
-  `password` varchar(7) DEFAULT NULL,
+  `password` varchar(7) BINARY DEFAULT NULL,
   `rank` int(1) DEFAULT NULL,
   `class` int(1) DEFAULT NULL,
   `address` varchar(7) DEFAULT NULL,
