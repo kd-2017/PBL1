@@ -1,13 +1,13 @@
 <?php
-	session_start();
-	#日付取得
-	date_default_timezone_set('Asia/Tokyo');
-	$week_name = array("日", "月", "火", "水", "木", "金", "土");
-	#学生用アカウントはアクセス不可、ログイン画面に遷移する
-	if($_SESSION['userid']['admin'] == '0' || empty($_SESSION['userid']['admin'] )){
-	header('location:login.html');
-	exit;
-	}
+  session_start();
+  #日付取得
+  date_default_timezone_set('Asia/Tokyo');
+  $week_name = array("日", "月", "火", "水", "木", "金", "土");
+  #学生用アカウントはアクセス不可、ログイン画面に遷移する
+  if($_SESSION['userid']['admin'] == '0' || empty($_SESSION['userid']['admin'] )){
+  header('location:login.html');
+  exit;
+  }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -26,127 +26,264 @@
   <body>
       <center>
       <br>
-            <a href="ChangePassForm.php" class="btn btn-default" style="width:10%;padding:20px">パスワード変更</a>
-            <a href="#" class="btn btn-default" style="width:10%;padding:20px">登校日の設定</a>
-            <a href="#" class="btn btn-default" style="width:10%;padding:20px">出欠状況の変更</a>
-            <a href="#" class="btn btn-default" style="width:10%;padding:20px">新年度登録</a>
-            <a href="#" class="btn btn-default" style="width:10%;padding:20px">バックアップ</a>
-            <a href="logout.php" class="btn btn-default" style="width:10%;padding:20px">ログアウト</a>
-            </div>
+      <nav class="navbar navbar-default">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gnavi">
+            <span class="sr-only">メニュー</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+
+        <div id="gnavi" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          <li><a href="ChangePassForm.php">パスワード変更</a></li>
+          <li><a href="schoolchange.html">登校日の設定</a></li>
+          <li><a href="#">出欠状況の変更</a></li>
+          <li><a href="#">新年度登録</a></li>
+          <li><a href="#">バックアップ</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+          </ul>
+        </div>
+      </nav>
       <br><br>
 
-        <table border="1" rules="none" style="font-size : 20px;" ><th  style="width:10%;padding:20px"><a href="#">月/週</a></th><th  style="width:10%;padding:20px"><&nbsp;前の週</th><th  style="width:10%;padding:20px">
+        <table border="1" rules="none" style="font-size : 20px;" >
+        <th  style="width:10%;padding:20px"><a href="#">月/週</a></th>
+        <th  style="width:10%;padding:20px"><a href="lastweek.php"><&nbsp;前の週</a></th><th  style="width:10%;padding:20px">
         <?php
         $today = date("n月j日");
         echo $today. '('.$week_name[date("w")].')';
-   		?>
-   			
-   		</th  style="width:10%;padding:20px"><th  style="width:10%;padding:20px">次の週&nbsp;></th></table>
+      ?>
+        
+      <th  style="width:10%;padding:20px"><a href="nextweek.php">次の週&nbsp;></a></th></table>
+      <br>
         </center>
         <table class="table table-responsive" border="1">
     <thead>
       <tr>
-        <th>出席番号</th>
-        <th>名前</th>
-        <th>出席率</th>
-        <th colspan="5">
-        <!--上記に表示されている週の月曜日をから表示-->
+        <th><div class="text-center">出席番号</th></div>
+        <th><div class="text-center">名前</th></div>
+        <th><div class="text-center">出席率</th></div>
+        <th colspan="5"><div class="text-center">  
+        <!--1週間を月曜日から表示-->
         <?php
-        #月曜日
+                #月曜日
         if (date("w") == 1) {
-        echo "<div class='text-center'>".date("n月j日(月)", strtotime($_SESSION["weekcount"]."week"))."</div>"."</th>";
+        echo date("n月j日(月)", strtotime($_SESSION["weekcount"]."week"))."</th>";
         $monday = strtotime($_SESSION["weekcount"]."week");
-		"<div class='text-center'>".date("n月j日",$monday)."</div>";
+    $day[0] = $monday;
         }else{
-        echo "<div class='text-center'>".date("n月j日(月)", strtotime('last Monday',strtotime($_SESSION["weekcount"]."week")))."</div>"."</th>";
+        echo date("n月j日(月)", strtotime('last Monday',strtotime($_SESSION["weekcount"]."week")))."</th>";
         $monday = strtotime('last Monday',strtotime($_SESSION["weekcount"]."week"));
-        "<div class='text-center'>".date("n月j日(月)", $monday)."</div>";
+         $day[0] = $monday;
         }
         #火曜日
         $tuesday = strtotime('+1 day',$monday);
-        #水曜日
-   		$wednesday = strtotime('+2 day',$monday);
-   		#木曜日
-   		$thursday = strtotime('+3 day',$monday);
-   		#金曜日
-   		$friday = strtotime('+4 day',$monday);
-   		#土曜日
-   		$saturday = strtotime('+5 day',$monday);
-   		#日曜日
-   		$sunday = strtotime('+6 day',$monday);
+         $day[1] = $tuesday;
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(火)",$tuesday)."</th></div>";
+      #水曜日
+      $wednesday = strtotime('+2 day',$monday);
+       $day[2] = $wednesday;
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(水)",$wednesday)."</th></div>";
+      #木曜日
+      $thursday = strtotime('+3 day',$monday);
+      $day[3] = $thursday;
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(木)",$thursday)."</th></div>";
+      #金曜日
+      $friday = strtotime('+4 day',$monday);
+      $day[4] = $friday;
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(金)",$friday)."</th></div>";
+      #土曜日
+      $saturday = strtotime('+5 day',$monday);
+      $day[5] = $saturday;
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(土)",$saturday)."</th></div>";
+      #日曜日
+      $sunday = strtotime('+6 day',$monday);
+      $day[6] = $sunday;
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(日)",$sunday)."</th></div>";
 
-   		echo "<th colspan='5'>"."<div class='text-center'>".date("n月j日(火)",$tuesday)."</div>"."</th>";
-   		
-   		echo "<th colspan='5'>"."<div class='text-center'>".date("n月j日(水)",$wednesday)."</div>"."</th>";
-   		
-   		echo "<th colspan='5'>"."<div class='text-center'>".date("n月j日(木)",$thursday)."</div>"."</th>";
-   		
-   		echo "<th colspan='5'>"."<div class='text-center'>".date("n月j日(金)",$friday)."</div>"."</th>";
-   		
-   		echo "<th colspan='5'>"."<div class='text-center'>".date("n月j日(土)",$saturday)."</div>"."</th>";
-   		
-   		echo "<th colspan='5'>"."<div class='text-center'>".date("n月j日(日)",$sunday)."</div>"."</th>";
         ?>
       </tr>
-      </th>
-      </tr>
+      <tr>
     </thead>
-    <?php
-    
+    <tbody>
+            <?php
+      #DBの接続のための設定
+  $dsn = 'mysql: host = localhost;dbname=admin; charset=utf8';
+  $user = 'admin';
+  $pass = 'admin';
 
-	
-    	echo "<tbody>".
-      "<tr>".
-        "<th>0K01000</th>".
-          "<th scope='row'>〇〇　〇〇</th>".
-          "<td>100%</td>".
-          "<td>1</td>".
-          "<td>2</td>".
-          "<td>3</td>".
-          "<td>4</td>".
-          "<td>5</td>".
-          "<td>6</td>".
-          "<td>7</td>".
-          "<td>8</td>".
-          "<td>9</td>".
-          "<td>10</td>".
-          "<td>11</td>".
-          "<td>12</td>".
-          "<td>13</td>".
-          "<td>14</td>".
-          "<td>15</td>".
-          "<td>16</td>".
-          "<td>17</td>".
-          "<td>18</td>".
-          "<td>19</td>".
-          "<td>20</td>".
-          "<td>21</td>".
-          "<td>22</td>".
-          "<td>23</td>".
-          "<td>24</td>".
-          "<td>25</td>".
-          "<td>26</td>".
-          "<td>27</td>".
-          "<td>28</td>".
-          "<td>29</td>".
-          "<td>30</td>".
-          "<td>31</td>".
-          "<td>32</td>".
-          "<td>33</td>".
-          "<td>34</td>".
-          "<td>35</td>".
-      "</tr>".
-    "</tbody>";
+  try{
+  $pdo = new PDO($dsn,$user,$pass);
 
-	/* $str = "0K01013" ;
+  #学生の出席情報表示
+  $stmt = $pdo->prepare("SELECT * FROM attendance WHERE year = ? and month = ? and day= ? and userid = ? ");
+  #学生の名前の表示
+  $stmt2 = $pdo->prepare("SELECT name FROM user WHERE userid = ?");
 
-	// 実行
-	$result = explode( "K", $str ) ;
+  #学生の人数分のループのための計算
+  $stmt3 = $pdo->prepare("SELECT COUNT(userid) AS cnt FROM attendance WHERE year = ? and month = ? and day= ?");
+  $stmt3 -> bindValue(1,date("Y",$day[0]));
+  $stmt3 -> bindValue(2,date("n",$day[0]));
+  $stmt3 -> bindValue(3,date("d",$day[0]));
+  $stmt3->execute();
+        $result3 = $stmt3->fetch();
+      if(empty($result3)){
 
-	// 結果
-	print_r( $result ) ;*/
-		
-    ?>
+      }else{
+        $count = $result3['cnt'];
+      }
+
+  #出席番号ループ
+   $number = "0K01000";
+   for ($num=1; $num <= $result3['cnt']; $num++) { 
+    $ns = str_pad($num,3,0,STR_PAD_LEFT);
+    $str = str_replace("000", $ns, $number);
+        $stmt2 ->bindValue(1,$str);
+        $stmt2->execute();
+        $result2 = $stmt2->fetch();
+      if(empty($result2)){
+        #
+      }else{
+        $uname =  $result2['name'];
+      }
+  #sql文の1つ目に年を入れる
+  $stmt -> bindValue(1,date("Y",$day[0]));
+  #sql文の2つ目に月を入れる
+  $stmt -> bindValue(2,date("n",$day[0]));
+  #sql文の３つ目に日を入れる
+  $stmt -> bindValue(3,date("d",$day[0]));
+  #sql文の4つ目にuseridを入れる
+  $stmt -> bindValue(4,$str);
+
+  #SQL文実行
+  $stmt->execute();
+  $result = $stmt->fetch();
+  if(empty($result['userid'])){
+      #DBに出欠状況がない場合は何もしない
+     #echo "<td></td><td></td><td></td>";
+    }else{
+  $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5']];
+
+      #出席番号を表示
+       echo "<td>".$result['userid']."</td>";
+      #名前を表示
+        echo "<th scope='row'>".$result2['name']."</th>";
+      #出席率を表示
+        echo "<td></td>";
+  }
+
+    #日付ループ
+  for($i = 0 ; $i<7 ; $i++){
+  #sql文の1つ目に年を入れる
+  $stmt -> bindValue(1,date("Y",$day[$i]));
+  #sql文の2つ目に月を入れる
+  $stmt -> bindValue(2,date("n",$day[$i]));
+  #sql文の３つ目に日を入れる
+  $stmt -> bindValue(3,date("d",$day[$i]));
+
+  $stmt -> bindValue(4,$str);
+
+  #SQL文実行
+  
+  $stmt->execute();
+  $result = $stmt->fetch();
+  if(empty($result['userid'])){
+      #DBに出欠状況がない場合は何もしない
+    }else{
+  $userday = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5']];
+    #出欠状況を表示
+    #1限
+      #出席は白
+      if($userday['attendance1'] == 0){
+        echo "<td><div class='text-center'>".$userday['attendance1']."</div></td>";
+        #遅刻は黄色
+      }elseif($userday['attendance1'] == 1){
+        echo "<td bgcolor =#ffff00><div class='text-center'>".$userday['attendance1']."</div></td>";
+        #欠課は赤
+      }elseif($userday['attendance1'] == 2) {
+        echo "<td bgcolor =#ff0000><div class='text-center'>".$userday['attendance1']."</div></td>";
+        #就活は水色
+      }elseif($userday['attendance1'] == 3) {
+        echo "<td bgcolor =#00ffff><div class='text-center'>".$userday['attendance1']."</div></td>";
+        #病欠は緑
+      }elseif($userday['attendance1'] == 4) {
+        echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance1']."</div></td>";
+        #公欠は青
+      }elseif($userday['attendance1'] == 5) {
+        echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance1']."</div></td>";
+      }
+      #2限
+      if($userday['attendance2'] == 0){
+        echo "<td><div class='text-center'>".$userday['attendance2']."</div></td>";
+      }elseif($userday['attendance2'] == 1){
+        echo "<td bgcolor =#ffff00><div class='text-center'>".$userday['attendance2']."</div></td>";
+      }elseif($userday['attendance2'] == 2) {
+        echo "<td bgcolor =#ff0000><div class='text-center'>".$userday['attendance2']."</div></td>";
+      }elseif($userday['attendance2'] == 3) {
+        echo "<td bgcolor =#00ffff><div class='text-center'>".$userday['attendance2']."</div></td>";
+      }elseif($userday['attendance2'] == 4) {
+        echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance2']."</div></td>";
+      }elseif($userday['attendance2'] == 5) {
+        echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance2']."</div></td>";
+      }
+      #3限
+            if($userday['attendance3'] == 0){
+        echo "<td><div class='text-center'>".$userday['attendance3']."</div></td>";
+      }elseif($userday['attendance3'] == 1){
+        echo "<td bgcolor =#ffff00><div class='text-center'>".$userday['attendance3']."</div></td>";
+      }elseif($userday['attendance3'] == 2) {
+        echo "<td bgcolor =#ff0000><div class='text-center'>".$userday['attendance3']."</div></td>";
+      }elseif($userday['attendance3'] == 3) {
+        echo "<td bgcolor =#00ffff><div class='text-center'>".$userday['attendance3']."</div></td>";
+      }elseif($userday['attendance3'] == 4) {
+        echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance3']."</div></td>";
+      }elseif($userday['attendance3'] == 5) {
+        echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance3']."</div></td>";
+      }
+      #4限
+            if($userday['attendance4'] == 0){
+        echo "<td><div class='text-center'>".$userday['attendance4']."</div></td>";
+      }elseif($userday['attendance4'] == 1){
+        echo "<td bgcolor =#ffff00><div class='text-center'>".$userday['attendance4']."</div></td>";
+      }elseif($userday['attendance4'] == 2) {
+        echo "<td bgcolor =#ff0000><div class='text-center'>".$userday['attendance4']."</div></td>";
+      }elseif($userday['attendance4'] == 3) {
+        echo "<td bgcolor =#00ffff><div class='text-center'>".$userday['attendance4']."</div></td>";
+      }elseif($userday['attendance4'] == 4) {
+        echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance4']."</div></td>";
+      }elseif($userday['attendance4'] == 5) {
+        echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance4']."</div></td>";
+      }
+      #5限
+        if($userday['attendance5'] == 0){
+        echo "<td><div class='text-center'>".$userday['attendance5']."</div></td>";
+      }elseif($userday['attendance5'] == 1){
+        echo "<td bgcolor =#ffff00><div class='text-center'>".$userday['attendance5']."</div></td>";
+      }elseif($userday['attendance5'] == 2) {
+        echo "<td bgcolor =#ff0000><div class='text-center'>".$userday['attendance5']."</div></td>";
+      }elseif($userday['attendance5'] == 3) {
+        echo "<td bgcolor =#00ffff><div class='text-center'>".$userday['attendance5']."</div></td>";
+      }elseif($userday['attendance5'] == 4) {
+        echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance5']."</div></td>";
+      }elseif($userday['attendance5'] == 5) {
+        echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance5']."</div></td>";
+      }
+
+  }
+}
+  echo"</tr>";
+}
+  }catch(Exception $e){
+    echo 'Error:' . $e->getMessage();
+}
+      ?>
+    </tbody>
   </table>
   </body>
 </html>
