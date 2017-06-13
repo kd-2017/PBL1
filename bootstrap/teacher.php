@@ -42,7 +42,7 @@
         <div id="gnavi" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
-          <li><a href="schoolchange.html">登校日の設定</a></li>
+          <li><a href="schooldays.html">登校日の設定</a></li>
           <li><a href="#">出欠状況の変更</a></li>
           <li><a href="#">新年度登録</a></li>
           <li><a href="#">バックアップ</a></li>

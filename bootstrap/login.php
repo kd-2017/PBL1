@@ -31,6 +31,10 @@ try{
       $uid = $result['userid'];
       $_SESSION['uid'] = $uid;
       $_SESSION['userid'] = $userdata;
+      #ログインした日付を保存
+      date_default_timezone_set('Asia/Tokyo');
+      $_SESSION['nowdate'] = date("n月j日");
+      $_SESSION['weekcount'] = 0;
     //  $_SESSSION['id'] = $result['userid'];
       #パスワードが初期値ならパスワード変更画面に遷移
           if(strstr($_REQUEST['loginId'], $_REQUEST['Password'])){
