@@ -20,15 +20,19 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- jQuery読み込み -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
     <!-- BootstrapのJS読み込み -->
     <script src="js/bootstrap.min.js"></script>
   </head>
   <body>
-      <center>
-      <br>
-      <nav class="navbar navbar-default">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gnavi">
+
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
             <span class="sr-only">メニュー</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -37,27 +41,30 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <a class="navbar-brand" href="#">メニュー</a>
         </div>
 
-        <div id="gnavi" class="collapse navbar-collapse">
+        <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
-          <li><a href="schooldays.html">登校日の設定</a></li>
+          <li><a href="schoolchange.html">登校日の設定</a></li>
           <li><a href="#">出欠状況の変更</a></li>
           <li><a href="#">新年度登録</a></li>
           <li><a href="#">バックアップ</a></li>
           <li><a href="logout.php">ログアウト</a></li>
           </ul>
         </div>
+        </div>
       </nav>
       <br><br>
 
         <table border="1" rules="none" style="font-size : 20px;" >
-        <th  style="width:10%;padding:20px"><a href="#">月/週</a></th>
+        <th  style="width:10%;padding:20px"><a href="lastmonth.php"><<前の月&nbsp;&nbsp;</a><a href="nextmonth.php">次の月>></a></th>
+
         <th  style="width:10%;padding:20px"><a href="lastweek.php"><&nbsp;前の週</a></th><th  style="width:10%;padding:20px">
         <?php
         $today = date("n月j日");
-        echo $today. '('.$week_name[date("w")].')';
+        echo "<a href='nowday.php'>".$today. '('.$week_name[date("w")].')</a>';
       ?>
         
       <th  style="width:10%;padding:20px"><a href="nextweek.php">次の週&nbsp;></a></th></table>
@@ -70,42 +77,34 @@
         <th><div class="text-center">名前</th></div>
         <th><div class="text-center">出席率</th></div>
         <th colspan="5"><div class="text-center">  
-        <!--1週間を月曜日から表示-->
+        <!--曜日を基準に1週間を月曜日から表示-->
         <?php
-                #月曜日
+        #月曜日
         if (date("w") == 1) {
-        echo date("n月j日(月)", strtotime($_SESSION["weekcount"]."week"))."</th>";
-        $monday = strtotime($_SESSION["weekcount"]."week");
-    $day[0] = $monday;
+        $day[0] = strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month");
+        echo date("n月j日(月)", $day[0])."</th>".date("w");
         }else{
-        echo date("n月j日(月)", strtotime('last Monday',strtotime($_SESSION["weekcount"]."week")))."</th>";
-        $monday = strtotime('last Monday',strtotime($_SESSION["weekcount"]."week"));
-         $day[0] = $monday;
+          $day[0]= strtotime('last Monday',strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month"));
+          echo date("n月j日(月)", $day[0])."</th>";
         }
         #火曜日
-        $tuesday = strtotime('+1 day',$monday);
-         $day[1] = $tuesday;
-      echo "<th colspan='5'><div class='text-center'>".date("n月j日(火)",$tuesday)."</th></div>";
+        $day[1] = strtotime('+1 day',$day[0]);
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(火)",$day[1])."</th></div>";
       #水曜日
-      $wednesday = strtotime('+2 day',$monday);
-       $day[2] = $wednesday;
-      echo "<th colspan='5'><div class='text-center'>".date("n月j日(水)",$wednesday)."</th></div>";
+      $day[2] = strtotime('+2 day',$day[0]);
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(水)",$day[2])."</th></div>";
       #木曜日
-      $thursday = strtotime('+3 day',$monday);
-      $day[3] = $thursday;
-      echo "<th colspan='5'><div class='text-center'>".date("n月j日(木)",$thursday)."</th></div>";
+      $day[3] = strtotime('+3 day',$day[0]);
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(木)",$day[3])."</th></div>";
       #金曜日
-      $friday = strtotime('+4 day',$monday);
-      $day[4] = $friday;
-      echo "<th colspan='5'><div class='text-center'>".date("n月j日(金)",$friday)."</th></div>";
+      $day[4] = strtotime('+4 day',$day[0]);
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(金)",$day[4])."</th></div>";
       #土曜日
-      $saturday = strtotime('+5 day',$monday);
-      $day[5] = $saturday;
-      echo "<th colspan='5'><div class='text-center'>".date("n月j日(土)",$saturday)."</th></div>";
+      $day[5] = strtotime('+5 day',$day[0]);
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(土)",$day[5])."</th></div>";
       #日曜日
-      $sunday = strtotime('+6 day',$monday);
-      $day[6] = $sunday;
-      echo "<th colspan='5'><div class='text-center'>".date("n月j日(日)",$sunday)."</th></div>";
+      $day[6] = strtotime('+6 day',$day[0]);
+      echo "<th colspan='5'><div class='text-center'>".date("n月j日(日)",$day[6])."</th></div>";
 
         ?>
       </tr>
@@ -171,7 +170,7 @@
   $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5']];
 
       #出席番号を表示
-       echo "<td>".$result['userid']."</td>";
+       echo "<td><div class='text-center'>".$result['userid']."</div></td>";
       #名前を表示
         echo "<th scope='row'>".$result2['name']."</th>";
       #出席率を表示
