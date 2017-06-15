@@ -80,13 +80,15 @@
         <!--曜日を基準に1週間を月曜日から表示-->
         <?php
         #月曜日
-        if (date("w") == 1) {
-        $day[0] = strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month");
-        echo date("n月j日(月)", $day[0])."</th>".date("w");
-        }else{
-          $day[0]= strtotime('last Monday',strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month"));
-          echo date("n月j日(月)", $day[0])."</th>";
+        
+          if (date("w") == 1) {
+            $day[0] = strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month");
+            echo date("n月j日(月)", $day[0])."</th>";
+          }else{
+            $day[0]= strtotime('last Monday',strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month"));
+            echo date("n月j日(月)", $day[0])."</th>";
         }
+      
         #火曜日
         $day[1] = strtotime('+1 day',$day[0]);
       echo "<th colspan='5'><div class='text-center'>".date("n月j日(火)",$day[1])."</th></div>";
@@ -127,6 +129,20 @@
 
   #学生の人数分のループのための計算
   $stmt3 = $pdo->prepare("SELECT COUNT(userid) AS cnt FROM attendance WHERE year = ? and month = ? and day= ?");
+
+  #すべての登校日から授業時間を計算
+  $sday = $pdo->query("SELECT * FROM calendar WHERE schooldays = 1");
+  $allday = $sday->rowCount();
+  #全体の出席時間
+  $allday *= 5;
+
+  #出欠カウント
+  $at1 = $pdo->prepare("SELECT count(attendance1) as at1 FROM `attendance` WHERE userid = ? AND attendance1 = ?");
+  $at2 = $pdo->prepare("SELECT count(attendance2) as at2 FROM `attendance` WHERE userid = ? AND attendance2 = ?");
+  $at3 = $pdo->prepare("SELECT count(attendance3) as at3 FROM `attendance` WHERE userid = ? AND attendance3 = ?");
+  $at4 = $pdo->prepare("SELECT count(attendance4) as at4 FROM `attendance` WHERE userid = ? AND attendance4 = ?");
+  $at5 = $pdo->prepare("SELECT count(attendance5) as at5 FROM `attendance` WHERE userid = ? AND attendance5 = ?");
+
   $stmt3 -> bindValue(1,date("Y",$day[0]));
   $stmt3 -> bindValue(2,date("n",$day[0]));
   $stmt3 -> bindValue(3,date("d",$day[0]));
@@ -139,6 +155,8 @@
       }
 
   #出席番号ループ
+  #出席番号は0K01001から始まり、学生の数分ループする。
+  #userテーブルの出席番号がattendanceテーブルにあれば出力、なければ無視する
    $number = "0K01000";
    for ($num=1; $num <= $result3['cnt']; $num++) { 
     $ns = str_pad($num,3,0,STR_PAD_LEFT);
@@ -146,6 +164,7 @@
         $stmt2 ->bindValue(1,$str);
         $stmt2->execute();
         $result2 = $stmt2->fetch();
+
       if(empty($result2)){
         #
       }else{
@@ -169,12 +188,117 @@
     }else{
   $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5']];
 
+  #遅刻合計
+  $a1 = 0;
+  #欠課合計
+  $a2 = 0;
+  #病欠合計
+  $a4 =0;
+
+    #出席率の計算
+    #遅刻、欠席、病欠のカウント
+      #1限
+      #遅刻
+      $at1 -> bindValue(1,$str);
+      $at1 -> bindValue(2,1);
+      $at1->execute();
+      $aten1=$at1->fetch();
+      $a1 = $a1 + $aten1['at1'];
+      #欠課
+      $at1 -> bindValue(2,2);
+      $at1->execute();
+      $aten1=$at1->fetch();
+      $a2 = $a2 + $aten1['at1'];
+      #病欠
+      $at1 -> bindValue(2,4);
+      $at1->execute();
+      $aten1=$at1->fetch();
+      $a4 = $a4 + $aten1['at1'];
+      #2限
+      #遅刻
+      $at2 -> bindValue(1,$str);
+      $at2 -> bindValue(2,1);
+      $at2->execute();
+      $aten2=$at2->fetch();
+      $a1 = $a1 + $aten2['at2'];
+      #欠課
+      $at2-> bindValue(2,2);
+      $at2->execute();
+      $aten2=$at2->fetch();
+      $a2 = $a2 + $aten2['at2'];
+      #病欠
+      $at2 -> bindValue(2,4);
+      $at2->execute();
+      $aten2=$at2->fetch();
+      $a4 = $a4 + $aten2['at2'];
+      #3限
+      #遅刻
+      $at3 -> bindValue(1,$str);
+      $at3 -> bindValue(2,1);
+      $at3->execute();
+      $aten3=$at3->fetch();
+      $a1 = $a1 + $aten3['at3'];
+      #欠課
+      $at3-> bindValue(2,2);
+      $at3->execute();
+      $aten3=$at3->fetch();
+      $a2 = $a2 + $aten3['at3'];
+      #病欠
+      $at3 -> bindValue(2,4);
+      $at3->execute();
+      $aten3=$at3->fetch();
+      $a4 = $a4 + $aten3['at3'];
+      #4限
+      #遅刻
+      $at4 -> bindValue(1,$str);
+      $at4 -> bindValue(2,1);
+      $at4->execute();
+      $aten4=$at4->fetch();
+      $a1 = $a1 + $aten4['at4'];
+      #欠課
+      $at4-> bindValue(2,2);
+      $at4->execute();
+      $aten4=$at4->fetch();
+      $a2 = $a2 + $aten4['at4'];
+      #病欠
+      $at4 -> bindValue(2,4);
+      $at4->execute();
+      $aten4=$at4->fetch();
+      $a4 = $a4 + $aten4['at4'];
+      #5限
+      #遅刻
+      $at5 -> bindValue(1,$str);
+      $at5 -> bindValue(2,1);
+      $at5->execute();
+      $aten5=$at5->fetch();
+      $a1 = $a1 + $aten5['at5'];
+      #欠課
+      $at5-> bindValue(2,2);
+      $at5->execute();
+      $aten5=$at5->fetch();
+      $a2 = $a2 + $aten5['at5'];
+      #病欠
+      $at5 -> bindValue(2,4);
+      $at5->execute();
+      $aten5=$at5->fetch();
+      $a4 = $a4 + $aten5['at5'];
+    
+
+  #欠席時間合計
+  $aa1 = floor($a1 / 3);
+  $absence = $aa1 + $a2 + $a4;
+
+  #出席率計算
+  $attenrate = (1 - ($absence / $allday)) * 100;
+  #カウントテスト
+  #echo "出席番号=".$str."遅刻=".$a1."__遅刻÷3=".$aa1."__欠課=".$a2."__病欠=".$a4."<br>";
+     
       #出席番号を表示
        echo "<td><div class='text-center'>".$result['userid']."</div></td>";
       #名前を表示
         echo "<th scope='row'>".$result2['name']."</th>";
       #出席率を表示
-        echo "<td></td>";
+        echo "<td class='text-right'>".$attenrate."%</td>";
   }
 
     #日付ループ
@@ -185,11 +309,9 @@
   $stmt -> bindValue(2,date("n",$day[$i]));
   #sql文の３つ目に日を入れる
   $stmt -> bindValue(3,date("d",$day[$i]));
-
   $stmt -> bindValue(4,$str);
 
   #SQL文実行
-  
   $stmt->execute();
   $result = $stmt->fetch();
   if(empty($result['userid'])){
