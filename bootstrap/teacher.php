@@ -287,9 +287,8 @@
   #欠席時間合計
   $aa1 = floor($a1 / 3);
   $absence = $aa1 + $a2 + $a4;
-
   #出席率計算
-  $attenrate = (1 - ($absence / $allday)) * 100;
+  $attenrate = floor((1 - ($absence / $allday)) * 1000)/10;
   #カウントテスト
   #echo "出席番号=".$str."遅刻=".$a1."__遅刻÷3=".$aa1."__欠課=".$a2."__病欠=".$a4."<br>";
      
@@ -298,7 +297,7 @@
       #名前を表示
         echo "<th scope='row'>".$result2['name']."</th>";
       #出席率を表示
-        echo "<td class='text-right'>".$attenrate."%</td>";
+        echo "<td class='text-right'><b><font color='red'>".number_format($attenrate,1) ."%</font></b></td>";
   }
 
     #日付ループ
