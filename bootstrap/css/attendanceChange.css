@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+#selectable .ui-selecting {
+	background-color: #b4b4b4;
+}
+#selectable .ui-selected {
+	background-color: #b4b4b4;
+}
+#contentu:hover {
+	opacity: 0.7;
+}
+
