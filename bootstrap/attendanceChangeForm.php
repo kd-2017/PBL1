@@ -55,7 +55,7 @@
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
           <li><a href="schoolchange.html">登校日の設定</a></li>
           <li><a href="attendanceChangeForm.php">出欠状況の変更</a></li>
-          <li><a href="#">新年度登録</a></li>
+          <li><a href="User1Form.php">新年度登録</a></li>
           <li><a href="#">バックアップ</a></li>
           <li><a href="logout.php">ログアウト</a></li>
           </ul>
@@ -152,6 +152,20 @@
 
   #学生の人数分のループのための計算
   $stmt3 = $pdo->prepare("SELECT COUNT(userid) AS cnt FROM attendance WHERE year = ? and month = ? and day= ?");
+
+  #すべての登校日から授業時間を計算
+  $sday = $pdo->query("SELECT * FROM calendar WHERE schooldays = 1");
+  $allday = $sday->rowCount();
+  #全体の出席時間
+  $allday *= 5;
+
+  #出欠カウント
+  $at1 = $pdo->prepare("SELECT count(attendance1) as at1 FROM `attendance` WHERE userid = ? AND attendance1 = ?");
+  $at2 = $pdo->prepare("SELECT count(attendance2) as at2 FROM `attendance` WHERE userid = ? AND attendance2 = ?");
+  $at3 = $pdo->prepare("SELECT count(attendance3) as at3 FROM `attendance` WHERE userid = ? AND attendance3 = ?");
+  $at4 = $pdo->prepare("SELECT count(attendance4) as at4 FROM `attendance` WHERE userid = ? AND attendance4 = ?");
+  $at5 = $pdo->prepare("SELECT count(attendance5) as at5 FROM `attendance` WHERE userid = ? AND attendance5 = ?");
+
   $stmt3 -> bindValue(1,date("Y",$day[0]));
   $stmt3 -> bindValue(2,date("n",$day[0]));
   $stmt3 -> bindValue(3,date("d",$day[0]));
@@ -195,12 +209,115 @@
     }else{
   $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5']];
 
+  #遅刻合計
+  $a1 = 0;
+  #欠課合計
+  $a2 = 0;
+  #病欠合計
+  $a4 =0;
+
+    #出席率の計算
+    #遅刻、欠席、病欠のカウント
+      #1限
+      #遅刻
+      $at1 -> bindValue(1,$str);
+      $at1 -> bindValue(2,1);
+      $at1->execute();
+      $aten1=$at1->fetch();
+      $a1 = $a1 + $aten1['at1'];
+      #欠課
+      $at1 -> bindValue(2,2);
+      $at1->execute();
+      $aten1=$at1->fetch();
+      $a2 = $a2 + $aten1['at1'];
+      #病欠
+      $at1 -> bindValue(2,4);
+      $at1->execute();
+      $aten1=$at1->fetch();
+      $a4 = $a4 + $aten1['at1'];
+      #2限
+      #遅刻
+      $at2 -> bindValue(1,$str);
+      $at2 -> bindValue(2,1);
+      $at2->execute();
+      $aten2=$at2->fetch();
+      $a1 = $a1 + $aten2['at2'];
+      #欠課
+      $at2-> bindValue(2,2);
+      $at2->execute();
+      $aten2=$at2->fetch();
+      $a2 = $a2 + $aten2['at2'];
+      #病欠
+      $at2 -> bindValue(2,4);
+      $at2->execute();
+      $aten2=$at2->fetch();
+      $a4 = $a4 + $aten2['at2'];
+      #3限
+      #遅刻
+      $at3 -> bindValue(1,$str);
+      $at3 -> bindValue(2,1);
+      $at3->execute();
+      $aten3=$at3->fetch();
+      $a1 = $a1 + $aten3['at3'];
+      #欠課
+      $at3-> bindValue(2,2);
+      $at3->execute();
+      $aten3=$at3->fetch();
+      $a2 = $a2 + $aten3['at3'];
+      #病欠
+      $at3 -> bindValue(2,4);
+      $at3->execute();
+      $aten3=$at3->fetch();
+      $a4 = $a4 + $aten3['at3'];
+      #4限
+      #遅刻
+      $at4 -> bindValue(1,$str);
+      $at4 -> bindValue(2,1);
+      $at4->execute();
+      $aten4=$at4->fetch();
+      $a1 = $a1 + $aten4['at4'];
+      #欠課
+      $at4-> bindValue(2,2);
+      $at4->execute();
+      $aten4=$at4->fetch();
+      $a2 = $a2 + $aten4['at4'];
+      #病欠
+      $at4 -> bindValue(2,4);
+      $at4->execute();
+      $aten4=$at4->fetch();
+      $a4 = $a4 + $aten4['at4'];
+      #5限
+      #遅刻
+      $at5 -> bindValue(1,$str);
+      $at5 -> bindValue(2,1);
+      $at5->execute();
+      $aten5=$at5->fetch();
+      $a1 = $a1 + $aten5['at5'];
+      #欠課
+      $at5-> bindValue(2,2);
+      $at5->execute();
+      $aten5=$at5->fetch();
+      $a2 = $a2 + $aten5['at5'];
+      #病欠
+      $at5 -> bindValue(2,4);
+      $at5->execute();
+      $aten5=$at5->fetch();
+      $a4 = $a4 + $aten5['at5'];
+    
+
+  #欠席時間合計
+  $aa1 = floor($a1 / 3);
+  $absence = $aa1 + $a2 + $a4;
+  #出席率計算
+  $attenrate = floor((1 - ($absence / $allday)) * 1000)/10;
+
+
       #出席番号を表示
        echo "<tr><th class='ui-state-default ui-widget-content'><div class='text-center disable'>".$result['userid']."</div></th>";
       #名前を表示
         echo "<th class='disable ui-state-default ui-widget-content' scope='row'>".$result2['name']."</th>";
       #出席率を表示
-        echo "<th class='disable ui-state-default ui-widget-content'></th>";
+        echo "<th class='disable ui-state-default ui-widget-content text-right'><b><font color='red'>".number_format($attenrate,1) ."%</font></b></th>";
   }
 
 

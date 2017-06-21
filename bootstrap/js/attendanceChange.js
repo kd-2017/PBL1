@@ -1,10 +1,5 @@
  $(function(){
 	$( "#selectable" ).selectable({
-      	selecting: function() {
-	        $( ".ui-selecting", this ).each(function() {
-	        	$(this).css({"back-ground-color": "#ff0000"});
-       	 	});
-      	},
       	stop: function() {
 	        $( ".ui-selected", this ).each(function() {
     	      var index = $( "#contentu" ).index( this );
@@ -16,8 +11,8 @@
 
 	// テーブルセルクリック時イベント
 	$( "[id=contentu]" ).click(function(){
-		 var clas = $(this).attr("class"); 
-		 var classes = clas.split(' '); 
+		var clas = $(this).attr("class"); 
+		var classes = clas.split(' '); 
 		// クリックした出欠コード取得
 		var attendance = $(this).html();
 		// 空文字の場合はスルー
@@ -63,10 +58,10 @@
 	$( 'input[name="attendance"]:radio' ).click( function() {
 		$("#selectable .ui-selected").html($(this).val());
 			$("#selectable .ui-selected").each(function(){
-			 var clas = $(this).attr("class"); 
-			 var classes = clas.split(' '); 
-			// hidden の 値変更
-			$("input[id="+classes[4]+"]").val($("input:radio[name='attendance']:checked").val());
+			 	var clas = $(this).attr("class"); 
+			 	var classes = clas.split(' '); 
+				// hidden の 値変更
+				$("input[id="+classes[4]+"]").val($("input:radio[name='attendance']:checked").val());
 			});
 		var attendance = parseInt($(this).val());
 		switch (attendance) {

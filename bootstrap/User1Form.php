@@ -22,7 +22,9 @@
     <title>ユーザー登録</title>
     <!-- BootstrapのCSS読み込み -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="css/roguin.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
     <!-- jQuery読み込み -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="js/User1.js"></script>
@@ -31,6 +33,34 @@
     <script src="js/bootstrap.min.js"></script>
   </head>
   <body>
+            <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">メニュー</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">メニュー</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          <li><a href="ChangePassForm.php">パスワード変更</a></li>
+          <li><a href="schoolchange.html">登校日の設定</a></li>
+          <li><a href="attendanceChangeForm.php">出欠状況の変更</a></li>
+          <li><a href="User1Form.php">新年度登録</a></li>
+          <li><a href="#">バックアップ</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+          </ul>
+        </div>
+        </div>
+      </nav>
+
     <div class = "container">
       <div class="wrapper">
         <form action="User1.php" method="post" name="Login_Form" class="form-signin" enctype="multipart/form-data">       

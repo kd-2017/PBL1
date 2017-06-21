@@ -1,12 +1,15 @@
 @charset "utf-8";
 
 #selectable .ui-selecting {
-	background-color: #b4b4b4;
+	filter: invert(20%);
 }
 #selectable .ui-selected {
-	background-color: #b4b4b4;
+	filter: invert(20%);
 }
 #contentu:hover {
-	opacity: 0.7;
+	opacity: 0.6;
 }
 
+tr {
+	border-bottom: 2px #a9a9a9 solid
+}
