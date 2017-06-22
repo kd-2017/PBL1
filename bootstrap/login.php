@@ -33,7 +33,7 @@ try{
       $_SESSION['userid'] = $userdata;
       #ログインした日付を保存
       date_default_timezone_set('Asia/Tokyo');
-      $_SESSION['nowdate'] = date("n月j日");
+      $_SESSION['nowdate'] = strtotime('+0 day');
       $_SESSION['weekcount'] = 0;
       $_SESSION['monthcount'] = 0;
     //  $_SESSSION['id'] = $result['userid'];
