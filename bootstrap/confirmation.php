@@ -29,8 +29,8 @@
   </head>
   <body>
   <h1>出席状況確認画面</h1>
-
-    <table class="table table-responsive" border="1">
+    <center>
+    <table class="table table-responsive" border="1" style="width:70%">
     <tr>
     <td class="text-center">0</td><td class="text-center">出席</td><td class="text-center" bgcolor =#ffff00>1</td><td class="text-center">遅刻</td>
     </tr>
@@ -41,12 +41,23 @@
     <td class="text-center" bgcolor =#00ff00>4</td><td class="text-center">病欠</td><td class="text-center" bgcolor =#1c90eb>5</td><td class="text-center">公欠</td>
     </tr>
     </table>
+    </center>
+    <br>
 
-      
+      <center>日付変更<br>
+
+    <form action="daychange.php" method="post"> 
+      <input type="date" name="daychange" required
+   />
+      &nbsp;&nbsp;<input type="submit" value="変更">
+    </form>
+    <br><br>
+
       <table class="table table-responsive" border="1">
   <thead>
     <tr>
       <th colspan="5" class="text-center">
+
       <?php
       
       echo date("n月j日",$_SESSION['nowdate']);
@@ -169,20 +180,20 @@
 }catch(Exception $e){
     echo 'Error:' . $e->getMessage();
 }
+
       ?>
     </tr>
     </tbody>
-    </table>
-    <br><br>
-   <center>日付変更<br>
-    <form action="daychange.php" method="post"> 
-      <input type="date" name="daychange" />
-      &nbsp;&nbsp;<input type="submit" value="変更"></button>
-    </form>
+    </table>   
 <br><br><br>
-    <button type="button" onclick="location.href='student.php'" class="btn btn-lg btn-primary btn-block" style="width:40%">
-    トップページに戻る
-</button>
+  <?php  
+  if(empty($_POST["return"])){
+    $_SESSION['nowdate'] = strtotime('+0 day');
+  }
+      ?>
+  <form action="student.php" method="post">
+    <input type="submit" class="btn btn-lg btn-primary btn-block" style="width:40%" name="return" value="トップページに戻る" />
+  </form>
     </center>
 
 
