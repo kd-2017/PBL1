@@ -3,7 +3,6 @@
   #日付取得
   date_default_timezone_set('Asia/Tokyo');
   $week_name = array("日", "月", "火", "水", "木", "金", "土");
-       ini_set('display_errors',0);
   #学生用アカウントはアクセス不可、ログイン画面に遷移する
   if($_SESSION['userid']['admin'] == '0' || empty($_SESSION['userid']['admin'] )){
   header('location:login.html');
@@ -48,7 +47,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
-          <li><a href="schoolchange.html">登校日の設定</a></li>
+          <li><a href="schooldays.html">登校日の設定</a></li>
           <li><a href="attendanceChangeForm.php">出欠状況の変更</a></li>
           <li><a href="User1Form.php">新年度登録</a></li>
           <li><a href="backupForm.php">バックアップ</a></li>
