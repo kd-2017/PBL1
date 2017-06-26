@@ -1,3 +1,49 @@
+ <!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登校日登録</title>
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+  </head>
+  <body>
+     <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">登校日登録</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">登校日登録</a>
+          </div>
+
+         <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          <li><a href="teacher.php"><i class="fa fa-home"></i> トップページへ</a></li>
+          <li><a href="schoolchange.html"><i class="fa fa-info"></i> 登校日変更</a></li>
+          <li><a href="attendanceChangeForm.php"><i class="fa fa-home"></i> 出欠状況の変更</a></li>
+          <li><a href="User1Form.php"><i class="fa fa-info"></i> 新年度登録</a></li>
+          <li><a href="backupForm.php"><i class="fa fa-home"></i> バックアップ</a></li>
+          <li><a href="logout.php"><i class="fa fa-info"></i> ログアウト</a></li>
+          </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    <div class = "container">
+      <div class="wrapper">
+          <h3 class="form-signin-heading">
+            登校日を登録しました。
+      </div>
+      </div>
+      </body>
+      </html>
 
 
 <?php
