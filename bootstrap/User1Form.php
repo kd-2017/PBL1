@@ -54,7 +54,7 @@
           <li><a href="schoolchange.html">登校日の設定</a></li>
           <li><a href="attendanceChangeForm.php">出欠状況の変更</a></li>
           <li><a href="User1Form.php">新年度登録</a></li>
-          <li><a href="#">バックアップ</a></li>
+          <li><a href="backupForm.php">バックアップ</a></li>
           <li><a href="logout.php">ログアウト</a></li>
           </ul>
         </div>
@@ -73,7 +73,7 @@
           <center>
             <!-- ファイル名表示テキストボックス -->
             <div class="input-group">
-              <input type="text" id="FileUpTextBox" class="form-control" placeholder="ファイルを選択してください" required="" autofocus="" style="width: 70%">
+              <input type="text" id="FileUpTextBox" class="form-control" placeholder="ファイルを選択してください" required="" autofocus="" style="width: 90%">
               <!-- ファイル選択ボタン -->
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default" onclick="$('#fileUpload').click();">参照</button>
@@ -82,14 +82,14 @@
 
             <br>
             <!-- 登録ボタン -->
-            <button class="btn btn-lg btn-primary btn-block" id="Submit" name="Submit" value="Registration" type="Submit" style="width: 90%">登録</button>
+            <button class="btn btn-lg btn-primary btn-block" id="Submit" name="Submit" value="Registration" type="Submit" style="width: 20%">登録</button>
 
           </center>
         </form>
         <?php
-        //一つ前のページに戻る
-        $uri = $_SERVER['HTTP_REFERER']; 
-        echo '<br><br><a href='.$uri.'><center><button class="btn btn-lg btn-primary btn-block" value="Back"　type="button" style="width:40%">戻る</button></center></a>';
+#        //一つ前のページに戻る
+#        $uri = $_SERVER['HTTP_REFERER']; 
+#        echo '<br><br><a href='.$uri.'><center><button class="btn btn-lg btn-primary btn-block" value="Back"　type="button" style="width:40%">戻る</button></center></a>';
          ?>   
       </div>
     </div>

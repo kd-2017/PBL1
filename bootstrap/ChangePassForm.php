@@ -37,7 +37,7 @@
           <li><a href="schoolchange.html">登校日の設定</a></li>
           <li><a href="attendanceChangeForm.php">出欠状況の変更</a></li>
           <li><a href="User1Form.php">新年度登録</a></li>
-          <li><a href="#">バックアップ</a></li>
+          <li><a href="backupForm.php">バックアップ</a></li>
           <li><a href="logout.php">ログアウト</a></li>
           </ul>
         </div>
@@ -75,8 +75,8 @@
         </form>
         <?php
         //一つ前のページに戻る
-        $uri = $_SERVER['HTTP_REFERER']; 
-        echo '<br><br><a href='.$uri.'><center><button class="btn btn-lg btn-primary btn-block" value="Back"　type="button" style="width:40%">戻る</button></center></a>';
+#        $uri = $_SERVER['HTTP_REFERER']; 
+#        echo '<br><br><a href='.$uri.'><center><button class="btn btn-lg btn-primary btn-block" value="Back"　type="button" style="width:40%">戻る</button></center></a>';
          ?>   
       </div>
     </div>
