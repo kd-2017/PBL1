@@ -1,9 +1,9 @@
 <?php
-  ini_set('display_errors', 0);
   session_start();
   #日付取得
   date_default_timezone_set('Asia/Tokyo');
   $week_name = array("日", "月", "火", "水", "木", "金", "土");
+       ini_set('display_errors',0);
   #学生用アカウントはアクセス不可、ログイン画面に遷移する
   if($_SESSION['userid']['admin'] == '0' || empty($_SESSION['userid']['admin'] )){
   header('location:login.html');
