@@ -42,7 +42,7 @@
               $stmt-> bindValue(1, $NewPass);
               $stmt-> bindValue(2, $userid);
               $stmt-> execute();
-              $_SESSION['error'] = 'パスワードを変更しました';
+              $_SESSION['error1'] = 'パスワードを変更しました';
               # 教員なら
               if ($admin == 1) {
                 # 教員ホーム画面に戻る
@@ -54,45 +54,45 @@
               exit;
             #パスワードが違うとき
             } else {
-              $error = "パスワードが違います";
+              $error1 = "パスワードが違います";
               # セッションにエラー文格納
-              $_SESSION['error'] = $error;
+              $_SESSION['error1'] = $error1;
               # 入力フォームに戻る
               header('location: ChangePassForm.php');
               exit;
             }
           # データベース接続失敗  
           } catch (PDOException $e) {
-            $error = 'データベース接続失敗。'.$e->getMessage();
+            $error1 = 'データベース接続失敗。'.$e->getMessage();
           # セッションにエラー文格納
-          $_SESSION['error'] = $error;
+          $_SESSION['error1'] = $error1;
             # 入力フォームに戻る
             header('location: ChangePassForm.php');
             exit;
           }
         # 新しいパスワードと新しいパスワード（確認）が一致しなかったとき
         } else {
-          $error = "新しいパスワードと新しいパスワード（確認）が一致しません";
+          $error1 = "新しいパスワードと新しいパスワード（確認）が一致しません";
           # セッションにエラー文格納
-          $_SESSION['error'] = $error;
+          $_SESSION['error1'] = $error1;
           # 入力フォームに戻る
           header('location: ChangePassForm.php');
           exit;
         }
       # 全角が含まれている時
       } else {
-        $error = "半角で入力して下さい";
+        $error1 = "半角で入力して下さい";
         # セッションにエラー文格納
-        $_SESSION['error'] = $error;
+        $_SESSION['error1'] = $error1;
         # 入力フォームに戻る
         header('location: ChangePassForm.php');
         exit;
       }
     # 文字数6文字未満、１1字以上の時
     } else {
-      $error = "6文字以上10字以内で入力してください";
+      $error1 = "6文字以上10字以内で入力してください";
       # セッションにエラー文格納
-      $_SESSION['error'] = $error;
+      $_SESSION['error1'] = $error1;
       # 入力フォームに戻る
       header('location: ChangePassForm.php');
       exit;
