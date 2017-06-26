@@ -1,4 +1,5 @@
 <?php
+  ini_set('display_errors', 0);
   session_start();
 	#日付取得
 	date_default_timezone_set('Asia/Tokyo');
@@ -95,7 +96,6 @@
     unset($_SESSION['attendance_text']);
   }
 ?>
-
       <table class="table table-responsive" border="1">
         <thead>
           <tr>
@@ -108,7 +108,7 @@
         #月曜日
         if (date("w") == 1) {
         $day[0] = strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month");
-        echo date("n月j日(月)", $day[0])."</th>".date("w");
+        echo date("n月j日(月)", $day[0])."</th>";
         }else{
           $day[0]= strtotime('last Monday',strtotime($_SESSION["weekcount"]."week".$_SESSION["monthcount"]."month"));
           echo date("n月j日(月)", $day[0])."</th>";
@@ -317,7 +317,11 @@
       #名前を表示
         echo "<th class='disable ui-state-default ui-widget-content' scope='row'>".$result2['name']."</th>";
       #出席率を表示
-        echo "<th class='disable ui-state-default ui-widget-content text-right'><b><font color='red'>".number_format($attenrate,1) ."%</font></b></th>";
+        if(number_format($attenrate,1) >= 80){
+            echo "<td class='disable ui-state-default ui-widget-content text-center'><b>".number_format($attenrate,1) ."%</font></b></td>";
+        }else{
+        echo "<td class='disable ui-state-default ui-widget-content text-center'><b><font color='red'>".number_format($attenrate,1) ."%</font></b></td>";
+      }
   }
 
 

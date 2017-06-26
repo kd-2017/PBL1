@@ -1,4 +1,5 @@
 <?php
+  ini_set('display_errors', 0);
   session_start();
   #日付取得
   date_default_timezone_set('Asia/Tokyo');
