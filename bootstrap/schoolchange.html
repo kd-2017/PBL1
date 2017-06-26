@@ -27,7 +27,7 @@
          <div class="navbar-collapse collapse">
            <ul class="nav navbar-nav">
           <li><a href="teacher.php"><i class="fa fa-home"></i> トップページへ</a></li>
-          <li><a href="schoolchange.html"><i class="fa fa-info"></i> 登校日変更</a></li>
+          <li><a href="schooldays.html"><i class="fa fa-info"></i> 登校日登録</a></li>
           <li><a href="attendanceChangeForm.php"><i class="fa fa-home"></i> 出欠状況の変更</a></li>
           <li><a href="User1Form.php"><i class="fa fa-info"></i> 新年度登録</a></li>
           <li><a href="backupForm.php"><i class="fa fa-home"></i> バックアップ</a></li>
@@ -39,7 +39,7 @@
     <div style="display:inline-flex">
     <div class="container">
         <div class="row">
-            <form action="change.php" method="post" name="date">
+            <form action="change2.php" method="post" name="date">
             <div class="col-sm-3 col-sm-offset-3">
                 <div class="form-group">
                 <label for="modify" class="control-label">１日のみ変更</label>
@@ -51,8 +51,9 @@
                     </div>
                     </div>
                     <input type="submit" value="変更">
+                    </form>
                     </div>
-
+          <form action="change.php" method="post" name="date">
             <div class= "col-md-3">
                   <div class="form-group">
                   <label for="form" class="control-label">期間を指定して変更</label>
@@ -73,6 +74,7 @@
                       </div>
                   </div>
               <input type="submit" value="変更">
+              </form>
               </div>
             </div>
            <script type="text/javascript">
