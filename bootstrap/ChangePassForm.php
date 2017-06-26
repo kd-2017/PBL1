@@ -28,9 +28,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+
           <a class="navbar-brand" href="#">メニュー</a>
         </div>
-
+<?php
+  # セッションスタート
+  session_start();
+  #学生用アカウントはアクセス不可、ログイン画面に遷移する
+  if((!$_SESSION['userid']['admin'] == '0') || (!empty($_SESSION['userid']['admin'] ))){
+?>
+<!-- 先生ページ用ヘッダ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ --> 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
@@ -41,16 +48,28 @@
           <li><a href="logout.php">ログアウト</a></li>
           </ul>
         </div>
+<?php
+  } else {
+?>
+<!-- 生徒ページ用ヘッダ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ --> 
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          <li><a href="ChangePassForm.php">パスワード変更</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+          </ul>
+        </div>
         </div>
       </nav>
+
+<?php
+  }
+?>
 
     <div class = "container">
       <div class="wrapper">
         <form action="ChangePass.php" method="post" name="Login_Form" class="form-signin">       
           <h3 class="form-signin-heading">
 <?php
-    # セッション開始
-    session_start();
     # エラーがある時だけ実行
     if ( isset($_SESSION['error']) ) {
       # エラー表示
