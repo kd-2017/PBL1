@@ -120,7 +120,6 @@
         if($result['offtime'] != null){
             $offtime_flg = 1;
         }
-
         ?>
         <br>
         <h3 class="text-center">あなたの出席率は現在<br>
