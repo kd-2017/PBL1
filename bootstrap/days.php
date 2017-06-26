@@ -29,13 +29,6 @@ if (!function_exists('date_parse_from_format')) {
             'j' => array('day', '\d{1,2}'),
             'D' => array('day', '[A-Z][a-z]{2}'),
             'l' => array('day', '[A-Z][a-z]{6,9}'),
-            'u' => array('hour', '\d{1,6}'),
-            'h' => array('hour', '\d{2}'),
-            'H' => array('hour', '\d{2}'),
-            'g' => array('hour', '\d{1,2}'),
-            'G' => array('hour', '\d{1,2}'),
-            'i' => array('minute', '\d{2}'),
-            's' => array('second', '\d{2}')
         );
 
         // convert format string to regex
