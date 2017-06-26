@@ -20,6 +20,7 @@
         <div class="col-xs-12 col-md-6">
         <h1 class="text-center">
 	   <?php
+     ini_set('display_errors',0);
 		session_start();
     if($_SESSION['userid']['admin'] == '1' || empty($_SESSION['userid'][''] )){
     header('location:login.html');
