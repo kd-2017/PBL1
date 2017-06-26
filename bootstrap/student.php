@@ -22,7 +22,7 @@
 	   <?php
      ini_set('display_errors',0);
 		session_start();
-    if($_SESSION['userid']['admin'] == '1' || empty($_SESSION['userid'][''] )){
+    if($_SESSION['userid']['admin'] == '1' || empty($_SESSION['userid'] )){
     header('location:login.html');
     exit;
     }
