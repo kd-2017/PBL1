@@ -5,7 +5,10 @@
 ?>
 
 <?php
-$date = $_POST["from"];
+$date = $_POST["modify"];
+print_r(date_parse_from_format("Y-m-d", $date));
+
+$date = $_POST["form"];
 print_r(date_parse_from_format("Y-m-d", $date));
 
 $date = $_POST["to"];

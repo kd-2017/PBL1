@@ -50,7 +50,7 @@
           <li><a href="schoolchange.html">登校日の設定</a></li>
           <li><a href="attendanceChangeForm.php">出欠状況の変更</a></li>
           <li><a href="User1Form.php">新年度登録</a></li>
-          <li><a href="#">バックアップ</a></li>
+          <li><a href="backupForm.php">バックアップ</a></li>
           <li><a href="logout.php">ログアウト</a></li>
           </ul>
         </div>
@@ -297,7 +297,11 @@
       #名前を表示
         echo "<th scope='row'>".$result2['name']."</th>";
       #出席率を表示
-        echo "<td class='text-right'><b><font color='red'>".number_format($attenrate,1) ."%</font></b></td>";
+        if(number_format($attenrate,1) >= 80){
+            echo "<td class='text-center'><b>".number_format($attenrate,1) ."%</font></b></td>";
+        }else{
+        echo "<td class='text-center'><b><font color='red'>".number_format($attenrate,1) ."%</font></b></td>";
+      }
   }
 
     #日付ループ
