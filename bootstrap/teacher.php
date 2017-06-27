@@ -187,15 +187,15 @@
   if(empty($result['userid'])){
       #DBに出欠状況がない場合は何もしない
      #echo "<td></td><td></td><td></td>";
+
     }else{
   $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5'], 'ontime' => $result['ontime'], 'schooldays' => $result['schooldays']];
 
       #今日登校していない学生の出欠状況を欠課にする
   $now = $pdo->prepare("SELECT * FROM attendance WHERE year = ? and month = ? and day= ? and userid = ? ");
   $now->execute([date("Y"),date("n"),date("d"),$str]);
-  $nnow[] = ['ontime'=>$result['ontime'], 'schooldays' => $result['schooldays']];
-
-    if(empty($nnow['ontime']) && $nnow['schooldays'] == 1){
+   $result = $now->fetch();
+    if(empty($result['ontime']) && $result['schooldays'] == 1){
         $kday= $pdo->prepare("UPDATE attendance SET attendance1 = '2' , attendance2 = '2' , attendance3 = '2' , attendance4 = '2' , attendance5 = '2' WHERE year = ? and month = ? and day = ? and userid = ?");
   $kday->execute([date("Y"),date("n"),date("d"),$str]);
     }
