@@ -28,6 +28,30 @@
     <script src="js/bootstrap.min.js"></script>
   </head>
   <body>
+              <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">メニュー</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="student.php">メニュー</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          <li><a href="confirmation.php">出欠状況確認</a></li>          
+          <li><a href="ChangePassForm.php">パスワード変更</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+          </ul>
+        </div>
+        </div>
+      </nav>
+
   <h1>出席状況確認画面</h1>
     <center>
     <table class="table table-responsive" border="1" style="width:70%">

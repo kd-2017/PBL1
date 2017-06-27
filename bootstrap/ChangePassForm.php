@@ -29,8 +29,6 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a class="navbar-brand" href="#">メニュー</a>
-        </div>
 <?php
   # セッションスタート
   session_start();
@@ -38,6 +36,8 @@
   if((!$_SESSION['userid']['admin'] == '0') || (!empty($_SESSION['userid']['admin'] ))){
 ?>
 <!-- 先生ページ用ヘッダ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ --> 
+          <a class="navbar-brand" href="teacher.php">メニュー</a>
+        </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
@@ -52,8 +52,11 @@
   } else {
 ?>
 <!-- 生徒ページ用ヘッダ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ --> 
+          <a class="navbar-brand" href="student.php">メニュー</a>
+        </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
+          <li><a href="confirmation.php">出欠状況確認</a></li>          
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
           <li><a href="logout.php">ログアウト</a></li>
           </ul>
@@ -71,11 +74,11 @@
           <h3 class="form-signin-heading">
 <?php
     # エラーがある時だけ実行
-    if ( isset($_SESSION['error']) ) {
+    if ( isset($_SESSION['error1']) ) {
       # エラー表示
-      echo $_SESSION['error'];
+      echo $_SESSION['error1'];
       # セッション削除
-      unset($_SESSION['error']);
+      unset($_SESSION['error1']);
     }
 ?>
           </h3>

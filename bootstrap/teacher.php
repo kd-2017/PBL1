@@ -1,5 +1,6 @@
 <?php
   session_start();
+  ini_set('display_errors', 0);
   #日付取得
   date_default_timezone_set('Asia/Tokyo');
   $week_name = array("日", "月", "火", "水", "木", "金", "土");
