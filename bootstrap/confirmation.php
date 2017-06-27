@@ -42,11 +42,11 @@
           </button>
           <a class="navbar-brand" href="student.php">メニュー</a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-          <li><a href="confirmation.php">出欠状況確認</a></li>          
-          <li><a href="ChangePassForm.php">パスワード変更</a></li>
-          <li><a href="logout.php">ログアウト</a></li>
+            <li><a href="confirmation.php">出欠状況確認</a></li> 
+            <li><a href="ChangePassForm.php">パスワード変更</a></li>
+            <li><a href="logout.php">ログアウト</a></li>
           </ul>
         </div>
         </div>

@@ -38,7 +38,7 @@
 <!-- 先生ページ用ヘッダ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ --> 
           <a class="navbar-brand" href="teacher.php">メニュー</a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
           <li><a href="schoolchange.html">登校日の設定</a></li>
@@ -54,7 +54,7 @@
 <!-- 生徒ページ用ヘッダ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ --> 
           <a class="navbar-brand" href="student.php">メニュー</a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
           <li><a href="confirmation.php">出欠状況確認</a></li>          
           <li><a href="ChangePassForm.php">パスワード変更</a></li>
