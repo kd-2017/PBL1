@@ -120,6 +120,9 @@
         if($result['offtime'] != null){
             $offtime_flg = 1;
         }
+        if($result['ontime'] != null && $result['offtime'] == null){
+          $offtime_flg = 0;
+        }
         ?>
         <br>
         <h3 class="text-center">あなたの出席率は現在<br>
