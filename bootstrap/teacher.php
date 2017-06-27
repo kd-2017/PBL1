@@ -132,7 +132,7 @@
   $stmt3 = $pdo->prepare("SELECT COUNT(userid) AS cnt FROM attendance WHERE year = ? and month = ? and day= ?");
 
   #すべての登校日から授業時間を計算
-  $sday = $pdo->query("SELECT * FROM calendar WHERE schooldays = 1");
+  $sday = $pdo->query("SELECT * FROM attendance WHERE schooldays = 1");
   $allday = $sday->rowCount();
   #全体の出席時間
   $allday *= 5;
@@ -171,6 +171,7 @@
       }else{
         $uname =  $result2['name'];
       }
+
   #sql文の1つ目に年を入れる
   $stmt -> bindValue(1,date("Y",$day[0]));
   #sql文の2つ目に月を入れる
@@ -187,7 +188,19 @@
       #DBに出欠状況がない場合は何もしない
      #echo "<td></td><td></td><td></td>";
     }else{
-  $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5']];
+  $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5'], 'ontime' => $result['ontime'], 'schooldays' => $result['schooldays']];
+
+      #今日登校していない学生の出欠状況を欠課にする
+  $now = $pdo->prepare("SELECT * FROM attendance WHERE year = ? and month = ? and day= ? and userid = ? ");
+  $now->execute([date("Y"),date("n"),date("d"),$str]);
+  $nnow[] = ['schooldays' => $result['schooldays']];
+
+    if(empty($result['ontime']) && $nnow['schooldays'] == 1){
+        $kday= $pdo->prepare("UPDATE attendance SET attendance1 = '2' , attendance2 = '2' , attendance3 = '2' , attendance4 = '2' , attendance5 = '2' WHERE year = ? and month = ? and day = ? and userid = ?");
+  $kday->execute([date("Y"),date("n"),date("d"),$str]);
+    }
+
+
 
   #遅刻合計
   $a1 = 0;
@@ -298,6 +311,7 @@
       #名前を表示
         echo "<th scope='row'>".$result2['name']."</th>";
       #出席率を表示
+
         if(number_format($attenrate,1) >= 80){
             echo "<td class='text-center'><b>".number_format($attenrate,1) ."%</font></b></td>";
         }else{
