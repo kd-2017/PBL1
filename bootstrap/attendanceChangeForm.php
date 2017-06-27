@@ -154,7 +154,7 @@
   $stmt3 = $pdo->prepare("SELECT COUNT(userid) AS cnt FROM attendance WHERE year = ? and month = ? and day= ?");
 
   #すべての登校日から授業時間を計算
-  $sday = $pdo->query("SELECT * FROM attendance WHERE schooldays = 1");
+  $sday = $pdo->query("SELECT * FROM attendance WHERE schooldays = 1 AND userid = '0K01001'");
   $allday = $sday->rowCount();
   #全体の出席時間
   $allday *= 5;

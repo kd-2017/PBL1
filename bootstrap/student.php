@@ -255,12 +255,12 @@
 <?php
         if($ontime_flg == 1){
 ?>
-        <p><input type="submit" id="hyouji" value="登校" name="sub1" class="btn btn-primary" onClick="Click_Sub()" style="width:100%;padding:10px;font-size:30px;" disabled></p>
+        <p><input type="submit" id="hyouji" value="登校" name="sub1" class="btn btn-primary" onclick="Click_Sub(); location.href='confirmation.php'" style="width:100%;padding:10px;font-size:30px;" disabled></p>
         <h3><div id="div1" style="display: none;">登校が完了しました</div></h3>
 <?php
         } else {
 ?>
-        <p><input type="submit" id="hyouji" value="登校" name="sub1" class="btn btn-primary" onClick="Click_Sub()" style="width:100%;padding:10px;font-size:30px;"></p>
+        <p><input type="submit" id="hyouji" value="登校" name="sub1" class="btn btn-primary" onclick="Click_Sub(); location.href='confirmation.php'" style="width:100%;padding:10px;font-size:30px;"></p>
         <h3><div id="div1" style="display: none;">登校が完了しました</div></h3>
 <?php
         }
@@ -271,12 +271,12 @@
 <?php
         if($offtime_flg == 1){
 ?>
-        <p><input type="submit" id="hyouji1" value="下校" name="sub2" class="btn btn-primary" onClick="Click_Sub1()" style="width:100%;padding:10px;font-size:30px;" disabled></p>
+        <p><input type="submit" id="hyouji1" value="下校" name="sub2" class="btn btn-primary" onclick="Click_Sub(); location.href='confirmation.php'" style="width:100%;padding:10px;font-size:30px;" disabled></p>
         <h3><div id="div2" style="display: none;">下校が完了しました</div></h3>
 <?php
         } else {
 ?>
-        <p><input type="submit" id="hyouji1" value="下校" name="sub2" class="btn btn-primary" onClick="Click_Sub1()" style="width:100%;padding:10px;font-size:30px;"></p>
+        <p><input type="submit" id="hyouji1" value="下校" name="sub2" class="btn btn-primary" onclick="Click_Sub(); location.href='confirmation.php'" style="width:100%;padding:10px;font-size:30px;"></p>
         <h3><div id="div2" style="display: none;">下校が完了しました</div></h3>
 <?php
         }
@@ -284,7 +284,7 @@
         </form><br>
         
         <form method="POST" action="">
-        <p><input type="button" value="出欠状況の確認" class="btn btn-primary" onclick="location.href='confirmation.php'" style="width:100%;padding:10px;font-size:30px;"></p>
+        <p><input type="button" value="出欠状況の確認" class="btn btn-primary"  onclick="location.href='confirmation.php'" style="width:100%;padding:10px;font-size:30px;"></p>
         <br></form>
 
         <form method="POST" action="">
