@@ -193,9 +193,9 @@
       #今日登校していない学生の出欠状況を欠課にする
   $now = $pdo->prepare("SELECT * FROM attendance WHERE year = ? and month = ? and day= ? and userid = ? ");
   $now->execute([date("Y"),date("n"),date("d"),$str]);
-  $nnow[] = ['schooldays' => $result['schooldays']];
+  $nnow[] = ['ontime'=>$result['ontime'], 'schooldays' => $result['schooldays']];
 
-    if(empty($result['ontime']) && $nnow['schooldays'] == 1){
+    if(empty($nnow['ontime']) && $nnow['schooldays'] == 1){
         $kday= $pdo->prepare("UPDATE attendance SET attendance1 = '2' , attendance2 = '2' , attendance3 = '2' , attendance4 = '2' , attendance5 = '2' WHERE year = ? and month = ? and day = ? and userid = ?");
   $kday->execute([date("Y"),date("n"),date("d"),$str]);
     }
