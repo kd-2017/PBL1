@@ -1,18 +1,79 @@
-<?PHP
-        echo "POSTの中身<pre>";
-        var_dump($_POST);
-        echo "</pre>";
-?>
-
 <?php
-$date = $_POST["modify"];
-print_r(date_parse_from_format("Y-m-d", $date));
-
 $date = $_POST["form"];
-print_r(date_parse_from_format("Y-m-d", $date));
+$hoge1=date_parse_from_format("Y-m-d", $date);
 
 $date = $_POST["to"];
-print_r(date_parse_from_format("Y-m-d", $date));
+$hoge2=date_parse_from_format("Y-m-d", $date);
+
+$dsn = 'mysql:dbname=admin;host=localhost';
+$user = 'admin';
+$password = 'admin';
+
+//$dbh = new PDO($dsn, $user, $password);
+
+ $pdo = new PDO($dsn, $user, $password,array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+ if($hoge1["month"]==12){ //範囲指定が12月からスタートしていた場合
+   $hoge3=1;
+
+   $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1-schooldays WHERE ((year = ? and month = ? and day >= ?) or (year = ? and month >= ? and day >= 1) or
+                                                                       (year = ? and month <= ? and day <= 31) or (year = ? and month = ? and day <= ?))");
+   $stmt -> bindValue(1, $hoge1["year"]);
+   $stmt -> bindValue(2, $hoge1["month"]);
+   $stmt -> bindValue(3, $hoge1["day"]);
+   $stmt -> bindValue(4, $hoge1["year"]+1);
+   $stmt -> bindValue(5, $hoge3);
+   $stmt -> bindValue(6, $hoge2["year"]);
+   $stmt -> bindValue(7, $hoge2["month"]-1);
+   $stmt -> bindValue(8, $hoge2["year"]);
+   $stmt -> bindValue(9, $hoge2["month"]);
+   $stmt -> bindValue(10, $hoge2["day"]);
+   $stmt -> execute();
+
+ } elseif ($hoge2["month"]==1) { //範囲指定が1月で終わっている場合
+   $hoge4=12;
+
+   $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1-schooldays WHERE ((year = ? and month = ? and day >= ?) or (year = ? and month >= ? and day >= 1) or
+                                                                       (year = ? and month <= ? and day <= 31) or (year = ? and month = ? and day <= ?))");
+   $stmt -> bindValue(1, $hoge1["year"]);
+   $stmt -> bindValue(2, $hoge1["month"]);
+   $stmt -> bindValue(3, $hoge1["day"]);
+   $stmt -> bindValue(4, $hoge1["year"]);
+   $stmt -> bindValue(5, $hoge1["month"]+1);
+   $stmt -> bindValue(6, $hoge2["year"]-1);
+   $stmt -> bindValue(7, $hoge4);
+   $stmt -> bindValue(8, $hoge2["year"]);
+   $stmt -> bindValue(9, $hoge2["month"]);
+   $stmt -> bindValue(10, $hoge2["day"]);
+   $stmt -> execute();
+
+ } elseif(($hoge1["month"]==12 and $hoge2["month"]==1) or (($hoge1["month"]+1) == $hoge2["month"]) or $hoge1["month"]==$hoge2["month"] ) {//範囲指定の月が連続しているも場合or範囲指定の月が同じ
+
+   $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1-schooldays WHERE ((year = ? and month = ? and day >= ?) or (year = ? and month = ? and day <= ?))");
+   $stmt -> bindValue(1, $hoge1["year"]);
+   $stmt -> bindValue(2, $hoge1["month"]);
+   $stmt -> bindValue(3, $hoge1["day"]);
+   $stmt -> bindValue(4, $hoge2["year"]);
+   $stmt -> bindValue(5, $hoge2["month"]);
+   $stmt -> bindValue(6, $hoge2["day"]);
+   $stmt -> execute();
+
+ }  else {//それ以外
+
+ $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1-schooldays WHERE ((year = ? and month = ? and day >= ?) or (year = ? and month >= ? and day >= 1) or
+                                                                     (year = ? and month <= ? and day <= 31) or (year = ? and month = ? and day <= ?))");
+ $stmt -> bindValue(1, $hoge1["year"]);
+ $stmt -> bindValue(2, $hoge1["month"]);
+ $stmt -> bindValue(3, $hoge1["day"]);
+ $stmt -> bindValue(4, $hoge1["year"]);
+ $stmt -> bindValue(5, $hoge1["month"]+1);
+ $stmt -> bindValue(6, $hoge2["year"]);
+ $stmt -> bindValue(7, $hoge2["month"]-1);
+ $stmt -> bindValue(8, $hoge2["year"]);
+ $stmt -> bindValue(9, $hoge2["month"]);
+ $stmt -> bindValue(10, $hoge2["day"]);
+ $stmt -> execute();
+}
 
 ?>
 

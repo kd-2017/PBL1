@@ -1,14 +1,20 @@
-<?PHP
-        echo "POSTの中身<pre>";
-        var_dump($_POST);
-        echo "</pre>";
-?>
-
 <?php
 
 $date = $_POST["modify"];
-print_r(date_parse_from_format("Y-m-d", $date));
+$hoge1=date_parse_from_format("Y-m-d", $date);
 
+$dsn = 'mysql:dbname=admin;host=localhost';
+$user = 'admin';
+$password = 'admin';
+
+
+ $pdo = new PDO($dsn, $user, $password,array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+
+ $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1-schooldays WHERE (year = ? and month = ? and day = ?)");
+ $stmt -> bindValue(1, $hoge1["year"]);
+ $stmt -> bindValue(2, $hoge1["month"]);
+ $stmt -> bindValue(3, $hoge1["day"]);
+ $stmt -> execute();
 ?>
 
 <?php
