@@ -80,6 +80,7 @@
             $stmt= $pdo->prepare("UPDATE attendance SET attendance1 = '2' , attendance2 = '2' , attendance3 = '2' , attendance4 = '2' , attendance5 = '2' WHERE year = ? and month = ? and day = ? and userid = ?");
         }
             $stmt->execute([$year, $month, $day, $_SESSION['userid']['userid']]);
+            header('location: confirmation.php');
         }
 
         if (isset($_POST["sub2"])){
@@ -103,6 +104,7 @@
         }    
 
          $stmt->execute([$year, $month, $day, $_SESSION['userid']['userid']]);
+         header('location: confirmation.php');
         
         }
 
