@@ -129,7 +129,7 @@
 
         <?php
       #すべての登校日から授業時間を計算
-  $sday = $pdo->query("SELECT * FROM calendar WHERE schooldays = 1");
+  $sday = $pdo->query("SELECT * FROM attendance WHERE schooldays = 1 and userid = '0K01001'");
   $allday = $sday->rowCount();
   #全体の出席時間
   $allday *= 5;
