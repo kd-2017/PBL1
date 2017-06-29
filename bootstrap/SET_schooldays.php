@@ -1,51 +1,3 @@
- <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>登校日登録</title>
-    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/navbar.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-  </head>
-  <body>
-     <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">登校日登録</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">登校日登録</a>
-          </div>
-
-         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-          <li><a href="teacher.php"><i class="fa fa-home"></i> トップページへ</a></li>
-          <li><a href="schoolchange.html"><i class="fa fa-info"></i> 登校日変更</a></li>
-          <li><a href="attendanceChangeForm.php"><i class="fa fa-home"></i> 出欠状況の変更</a></li>
-          <li><a href="User1Form.php"><i class="fa fa-info"></i> 新年度登録</a></li>
-          <li><a href="backupForm.php"><i class="fa fa-home"></i> バックアップ</a></li>
-          <li><a href="logout.php"><i class="fa fa-info"></i> ログアウト</a></li>
-          </ul>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-      </nav>
-    <div class = "container">
-      <div class="wrapper">
-          <h3 class="form-signin-heading">
-            登校日を登録しました。
-      </div>
-      </div>
-      </body>
-      </html>
-
-
 <?php
 $hoge1;
 $hoge2;
@@ -58,19 +10,65 @@ $hoge1=date_parse_from_format("Y-m-d", $date);
 $date = $_POST["last"];
 $hoge2=date_parse_from_format("Y-m-d", $date);
 
- if($hoge1["month"]==12){
-   $hoge3=1;
- }
-
-$dsn = 'mysql:dbname=admin;host=localhost';
-$user = 'admin';
-$password = 'admin';
+ $dsn = 'mysql:dbname=admin;host=localhost';
+ $user = 'admin';
+ $password = 'admin';
 
  //$dbh = new PDO($dsn, $user, $password);
 
   $pdo = new PDO($dsn, $user, $password,array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
-  $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1 WHERE (((year = ? and month >= ? and day >= ?) or (year = ? and month = ? and day >= 1) or
+  if($hoge1["month"]==12){ //範囲指定が12月からスタートしていた場合
+    $hoge3=1;
+
+    $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1 WHERE (((year = ? and month = ? and day >= ?) or (year = ? and month >= ? and day >= 1) or
+                                                                        (year = ? and month <= ? and day <= 31) or (year = ? and month = ? and day <= ?)) and
+                                                                        (weeknumber != 0 and weeknumber != 6) and holidayname='')");
+    $stmt -> bindValue(1, $hoge1["year"]);
+    $stmt -> bindValue(2, $hoge1["month"]);
+    $stmt -> bindValue(3, $hoge1["day"]);
+    $stmt -> bindValue(4, $hoge1["year"]+1);
+    $stmt -> bindValue(5, $hoge3);
+    $stmt -> bindValue(6, $hoge2["year"]);
+    $stmt -> bindValue(7, $hoge2["month"]-1);
+    $stmt -> bindValue(8, $hoge2["year"]);
+    $stmt -> bindValue(9, $hoge2["month"]);
+    $stmt -> bindValue(10, $hoge2["day"]);
+    $stmt -> execute();
+
+  } elseif ($hoge2["month"]==1) { //範囲指定が1月で終わっている場合
+    $hoge4=12;
+
+    $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1 WHERE (((year = ? and month = ? and day >= ?) or (year = ? and month >= ? and day >= 1) or
+                                                                        (year = ? and month <= ? and day <= 31) or (year = ? and month = ? and day <= ?)) and
+                                                                        (weeknumber != 0 and weeknumber != 6) and holidayname='')");
+    $stmt -> bindValue(1, $hoge1["year"]);
+    $stmt -> bindValue(2, $hoge1["month"]);
+    $stmt -> bindValue(3, $hoge1["day"]);
+    $stmt -> bindValue(4, $hoge1["year"]);
+    $stmt -> bindValue(5, $hoge1["month"]+1);
+    $stmt -> bindValue(6, $hoge2["year"]-1);
+    $stmt -> bindValue(7, $hoge4);
+    $stmt -> bindValue(8, $hoge2["year"]);
+    $stmt -> bindValue(9, $hoge2["month"]);
+    $stmt -> bindValue(10, $hoge2["day"]);
+    $stmt -> execute();
+
+  } elseif(($hoge1["month"]==12 and $hoge2["month"]==1) or (($hoge1["month"]+1) == $hoge2["month"]) or $hoge1["month"]==$hoge2["month"] ) {//範囲指定の月が連続しているも場合or範囲指定の月が同じ
+
+    $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1 WHERE (((year = ? and month = ? and day >= ?) or (year = ? and month = ? and day <= ?)) and
+                                                                        (weeknumber != 0 and weeknumber != 6) and holidayname='')");
+    $stmt -> bindValue(1, $hoge1["year"]);
+    $stmt -> bindValue(2, $hoge1["month"]);
+    $stmt -> bindValue(3, $hoge1["day"]);
+    $stmt -> bindValue(4, $hoge2["year"]);
+    $stmt -> bindValue(5, $hoge2["month"]);
+    $stmt -> bindValue(6, $hoge2["day"]);
+    $stmt -> execute();
+
+  }  else {//それ以外
+
+  $stmt = $pdo -> prepare("UPDATE attendance SET schooldays=1 WHERE (((year = ? and month = ? and day >= ?) or (year = ? and month >= ? and day >= 1) or
                                                                       (year = ? and month <= ? and day <= 31) or (year = ? and month = ? and day <= ?)) and
                                                                       (weeknumber != 0 and weeknumber != 6) and holidayname='')");
   $stmt -> bindValue(1, $hoge1["year"]);
@@ -84,6 +82,8 @@ $password = 'admin';
   $stmt -> bindValue(9, $hoge2["month"]);
   $stmt -> bindValue(10, $hoge2["day"]);
   $stmt -> execute();
+}
+
 ?>
 
 <?php
