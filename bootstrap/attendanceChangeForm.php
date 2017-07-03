@@ -374,6 +374,8 @@
         #公欠は青
       }elseif($userday['attendance1'] == 5) {
         echo "<td id='contentu'   class='text-center  ui-state-default ui-widget-content ".(1+($i*5)+(($num-1)*35))."' style ='background-color:#1c90eb'>".$userday['attendance1']."</td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td class='ui-state-default ui-widget-content'></div></td>";
       }
       #2限
       if ($userday['attendance1'] == "") {
@@ -390,6 +392,8 @@
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(2+($i*5)+(($num-1)*35))."' style ='background-color:#00ff00'>".$userday['attendance2']."</td>";
       }elseif($userday['attendance2'] == 5) {
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(2+($i*5)+(($num-1)*35))."' style ='background-color:#1c90eb'>".$userday['attendance2']."</td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td class='ui-state-default ui-widget-content'></div></td>";
       }
       #3限
       if ($userday['attendance1'] == "") {
@@ -406,6 +410,8 @@
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(3+($i*5)+(($num-1)*35))."'   style ='background-color:#00ff00'>".$userday['attendance3']."</td>";
       }elseif($userday['attendance3'] == 5) {
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(3+($i*5)+(($num-1)*35))."'   style ='background-color:#1c90eb'>".$userday['attendance3']."</td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td class='ui-state-default ui-widget-content'></div></td>";
       }
       #4限
       if ($userday['attendance1'] == "") {
@@ -422,6 +428,8 @@
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(4+($i*5)+(($num-1)*35))."'   style ='background-color:#00ff00'>".$userday['attendance4']."</td>";
       }elseif($userday['attendance4'] == 5) {
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(4+($i*5)+(($num-1)*35))."'   style ='background-color:#1c90eb'>".$userday['attendance4']."</td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td class='ui-state-default ui-widget-content'></div></td>";
       }
       #5限
       if ($userday['attendance1'] == "") {
@@ -438,6 +446,8 @@
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(5+($i*5)+(($num-1)*35))."'   style ='background-color:#00ff00'>".$userday['attendance5']."</td>";
       }elseif($userday['attendance5'] == 5) {
         echo "<td id='contentu' class='text-center  ui-state-default ui-widget-content ".(5+($i*5)+(($num-1)*35))."'   style ='background-color:#1c90eb'>".$userday['attendance5']."</td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td class='ui-state-default ui-widget-content'></div></td>";
       }
   }
 }

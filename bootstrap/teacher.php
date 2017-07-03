@@ -189,13 +189,16 @@
      #echo "<td></td><td></td><td></td>";
 
     }else{
-  $userday[] = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5'], 'ontime' => $result['ontime'], 'schooldays' => $result['schooldays']];
+  $userday = ['userid'=>$result['userid'], 'attendance1'=>$result['attendance1'], 'attendance2'=>$result['attendance2'], 'attendance3' => $result['attendance3'], 'attendance4' => $result['attendance4'], 'attendance5' => $result['attendance5'], 'ontime' => $result['ontime'], 'schooldays' => $result['schooldays']];
+
+
 
       #今日登校していない学生の出欠状況を欠課にする
   $now = $pdo->prepare("SELECT * FROM attendance WHERE year = ? and month = ? and day= ? and userid = ? ");
   $now->execute([date("Y"),date("n"),date("d"),$str]);
    $result = $now->fetch();
-    if(empty($result['ontime']) && $result['schooldays'] == 1){
+    #         登校していない                 登校日である                        今日の1限目にデータがない
+    if(empty($result['ontime']) && $result['schooldays'] == 1 && $result['attendance1'] == 9){
         $kday= $pdo->prepare("UPDATE attendance SET attendance1 = '2' , attendance2 = '2' , attendance3 = '2' , attendance4 = '2' , attendance5 = '2' WHERE year = ? and month = ? and day = ? and userid = ?");
   $kday->execute([date("Y"),date("n"),date("d"),$str]);
     }
@@ -356,6 +359,8 @@
         #公欠は青
       }elseif($userday['attendance1'] == 5) {
         echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance1']."</div></td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td></div></td>";
       }
       #2限
       if($userday['attendance2'] == 0){
@@ -370,6 +375,8 @@
         echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance2']."</div></td>";
       }elseif($userday['attendance2'] == 5) {
         echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance2']."</div></td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td></div></td>";
       }
       #3限
             if($userday['attendance3'] == 0){
@@ -384,6 +391,8 @@
         echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance3']."</div></td>";
       }elseif($userday['attendance3'] == 5) {
         echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance3']."</div></td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td></div></td>";
       }
       #4限
             if($userday['attendance4'] == 0){
@@ -398,6 +407,8 @@
         echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance4']."</div></td>";
       }elseif($userday['attendance4'] == 5) {
         echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance4']."</div></td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td></div></td>";
       }
       #5限
         if($userday['attendance5'] == 0){
@@ -412,6 +423,8 @@
         echo "<td bgcolor =#00ff00><div class='text-center'>".$userday['attendance5']."</div></td>";
       }elseif($userday['attendance5'] == 5) {
         echo "<td bgcolor =#1c90eb><div class='text-center'>".$userday['attendance5']."</div></td>";
+      }elseif($userday['attendance1'] == 9) {
+        echo "<td></div></td>";
       }
 
   }
