@@ -25,6 +25,7 @@
             $password = 'admin';
             # データベース接続
             $pdo = new PDO($dsn, $user, $password);
+
             #ユーザーID取得
             $userid = $_SESSION['uid'];      
             # そのユーザーのパスワードと「教員、生徒判定フラグ」を取得 
@@ -42,6 +43,7 @@
               $stmt-> bindValue(1, $NewPass);
               $stmt-> bindValue(2, $userid);
               $stmt-> execute();
+
               $_SESSION['error1'] = 'パスワードを変更しました';
               # 教員なら
               if ($admin == 1) {
