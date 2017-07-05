@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+#selectable .ui-selecting {
+	filter: invert(20%);
+}
+#selectable .ui-selected {
+	filter: invert(20%);
+}
+#contentu:hover {
+	opacity: 0.6;
+}
+
+tr {
+	border-bottom: 2px #a9a9a9 solid
+}

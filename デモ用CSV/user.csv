@@ -1,0 +1,9 @@
+userid,name,password,rank,class,address,admin
+teacher,teacher,teacher,0,0,address,1
+0K01001,AA BB,0K01001,4,1,address,0
+0K01002,BB CC,0K01002,4,1,address,0
+0K01003,DD EE,0K01003,4,1,address,0
+0K01004,EE FF,0K01004,4,1,address,0
+0K01005,FF GG,0K01005,4,1,address,0
+0K01006,GG HH,0K01006,4,1,address,0
+0K01007,HH II,0K01007,4,1,address,0
